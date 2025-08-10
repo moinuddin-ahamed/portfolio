@@ -60,7 +60,7 @@ export default function Portfolio() {
       title: "Drug Trafficking Detection System",
       description: "SIH 2024 - Advanced detection system using computer vision and machine learning",
       tech: ["OpenCV", "PyTorch", "Flask", "MongoDB"],
-      status: "🥇 Winner",
+      status: "🏆 Finalist",
     },
     {
       title: "Fashion Item Classifier",
