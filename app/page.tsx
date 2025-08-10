@@ -129,15 +129,26 @@ export default function Portfolio() {
           
           <div className="hidden md:flex space-x-8">
             {[
-              { name: "Home", id: "home" },
-              { name: "About", id: "about" },
-              { name: "Work", id: "work" },
-              { name: "Contact", id: "contact" },
-              { name: "Resume", id: "resume" },
+              { name: "Home", id: "home", external: false },
+              { name: "About", id: "about", external: false },
+              { name: "Work", id: "work", external: false },
+              { name: "Contact", id: "contact", external: false },
+              {
+                name: "Resume",
+                id: "resume",
+                external: true,
+                url: "https://drive.google.com/file/d/1nztoHe1wDLZSe94hCmbMAT3L9fAMIlph/view?usp=sharing",
+              },
             ].map((item, index) => (
               <motion.button
                 key={item.name}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => {
+                  if (item.external && item.url) {
+                    window.open(item.url, "_blank", "noopener,noreferrer")
+                  } else {
+                    scrollToSection(item.id)
+                  }
+                }}
                 className="text-white/80 hover:text-white transition-colors duration-200 font-medium relative"
                 whileHover={{ y: -3, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -147,7 +158,10 @@ export default function Portfolio() {
                 onHoverStart={() => setIsHovering(true)}
                 onHoverEnd={() => setIsHovering(false)}
               >
-                <span className="relative z-10">{item.name}</span>
+                <span className="relative z-10 flex items-center gap-1">
+                  {item.name}
+                  {item.external && <ExternalLink className="w-3 h-3" />}
+                </span>
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-pink-500/20 rounded-lg"
                   initial={{ scale: 0, opacity: 0 }}
@@ -162,6 +176,29 @@ export default function Portfolio() {
                 />
               </motion.button>
             ))}
+          </div>
+
+          {/* Mobile buttons */}
+          <div className="flex md:hidden gap-4">
+            <Button
+              onClick={() => scrollToSection("contact")}
+              className="bg-gradient-to-r from-orange-500 to-pink-500 text-white h-9 px-4"
+            >
+              Contact
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() =>
+                window.open(
+                  "https://drive.google.com/file/d/1nztoHe1wDLZSe94hCmbMAT3L9fAMIlph/view?usp=sharing",
+                  "_blank",
+                  "noopener,noreferrer"
+                )
+              }
+              className="h-9 px-4 flex items-center gap-1"
+            >
+              Resume <ExternalLink className="w-3 h-3" />
+            </Button>
           </div>
         </div>
       </motion.nav>
